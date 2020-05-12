@@ -19,3 +19,5 @@ I have made several changes to original code while exploring this solution.
 * Specify measurement step and time step instead of const 15.
 * Figure out why screen is blinking every 2-3 seconds and fix it.
 * Add photoresistor to the final scheme.
+* Change font to some mono family
+* Add emoji variations based on ppm value

@@ -5,79 +5,79 @@ void drawDig(byte dig, byte x, byte y) {
       lcd.setCursor(x, y);
       lcd.write(0);
       lcd.write(1);
-      lcd.write(2);
+      lcd.write(0);
 
       lcd.setCursor(x, y + 1);
-      lcd.write(3);
-      lcd.write(4);
-      lcd.write(5);
+      lcd.write(0);
+      lcd.write(2);
+      lcd.write(0);
       break;
     case 1:
       lcd.setCursor(x + 1, y);
       lcd.write(1);
-      lcd.write(2);
+      lcd.write(0);
       
       lcd.setCursor(x + 2, y + 1);
-      lcd.write(5);
+      lcd.write(0);
       break;
     case 2:
       lcd.setCursor(x, y);
-      lcd.write(6);
-      lcd.write(6);
-      lcd.write(2);
+      lcd.write(3);
+      lcd.write(3);
+      lcd.write(0);
       
       lcd.setCursor(x, y + 1);
-      lcd.write(3);
-      lcd.write(7);
-      lcd.write(7);
+      lcd.write(0);
+      lcd.write(4);
+      lcd.write(4);
       break;
     case 3:
       lcd.setCursor(x, y);
-      lcd.write(6);
-      lcd.write(6);
-      lcd.write(2);
+      lcd.write(3);
+      lcd.write(3);
+      lcd.write(0);
       
       lcd.setCursor(x, y + 1);
-      lcd.write(7);
-      lcd.write(7);
-      lcd.write(5);
+      lcd.write(4);
+      lcd.write(4);
+      lcd.write(0);
       break;
     case 4:
       lcd.setCursor(x, y);
-      lcd.write(3);
-      lcd.write(4);
+      lcd.write(0);
       lcd.write(2);
+      lcd.write(0);
       
       lcd.setCursor(x + 2, y + 1);
-      lcd.write(5);
+      lcd.write(0);
       break;
     case 5:
       lcd.setCursor(x, y);
       lcd.write(0);
-      lcd.write(6);
-      lcd.write(6);
+      lcd.write(3);
+      lcd.write(3);
       
       lcd.setCursor(x, y + 1);
-      lcd.write(7);
-      lcd.write(7);
-      lcd.write(5);
+      lcd.write(4);
+      lcd.write(4);
+      lcd.write(0);
       break;
     case 6:
       lcd.setCursor(x, y);
       lcd.write(0);
-      lcd.write(6);
-      lcd.write(6);
+      lcd.write(3);
+      lcd.write(3);
       
       lcd.setCursor(x, y + 1);
-      lcd.write(3);
-      lcd.write(7);
-      lcd.write(5);
+      lcd.write(0);
+      lcd.write(4);
+      lcd.write(0);
       break;
     case 7:
       lcd.setCursor(x, y);
       lcd.write(1);
       lcd.write(1);
-      lcd.write(2);
+      lcd.write(0);
       
       lcd.setCursor(x + 1, y + 1);
       lcd.write(0);
@@ -85,23 +85,23 @@ void drawDig(byte dig, byte x, byte y) {
     case 8:
       lcd.setCursor(x, y);
       lcd.write(0);
-      lcd.write(6);
-      lcd.write(2);
+      lcd.write(3);
+      lcd.write(0);
       
       lcd.setCursor(x, y + 1);
-      lcd.write(3);
-      lcd.write(7);
-      lcd.write(5);
+      lcd.write(0);
+      lcd.write(4);
+      lcd.write(0);
       break;
     case 9:
       lcd.setCursor(x, y);
       lcd.write(0);
-      lcd.write(6);
-      lcd.write(2);
+      lcd.write(3);
+      lcd.write(0);
       
       lcd.setCursor(x + 1, y + 1);
-      lcd.write(4);
-      lcd.write(5);
+      lcd.write(2);
+      lcd.write(0);
       break;
     case 10:
       lcd.setCursor(x, y);
@@ -118,6 +118,8 @@ void drawDig(byte dig, byte x, byte y) {
 }
 
 void drawClock() {
+  loadClock();
+
   int x = 0;
   int y = 0;
   
@@ -160,6 +162,8 @@ void drawData() {
 }
 
 void drawPlot(byte pos, byte row, byte width, byte height, int min_val, int max_val, int stp_val, int *plot_array, String label) {
+  loadPlot();
+  
   int max_value = -32000;
   int min_value = 32000;
 

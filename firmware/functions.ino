@@ -21,23 +21,26 @@ void setLED(byte color) {
 }
 
 void loadClock() {
-  uint8_t LT[8]  = {0b00111,  0b01111,  0b11111,  0b11111,  0b11111,  0b11111,  0b11111,  0b11111};
-  uint8_t UB[8]  = {0b11111,  0b11111,  0b11111,  0b00000,  0b00000,  0b00000,  0b00000,  0b00000};
-  uint8_t RT[8]  = {0b11100,  0b11110,  0b11111,  0b11111,  0b11111,  0b11111,  0b11111,  0b11111};
-  uint8_t LL[8]  = {0b11111,  0b11111,  0b11111,  0b11111,  0b11111,  0b11111,  0b01111,  0b00111};
-  uint8_t LB[8]  = {0b00000,  0b00000,  0b00000,  0b00000,  0b00000,  0b11111,  0b11111,  0b11111};
-  uint8_t LR[8]  = {0b11111,  0b11111,  0b11111,  0b11111,  0b11111,  0b11111,  0b11110,  0b11100};
-  uint8_t UMB[8] = {0b11111,  0b11111,  0b11111,  0b00000,  0b00000,  0b00000,  0b11111,  0b11111};
-  uint8_t LMB[8] = {0b11111,  0b00000,  0b00000,  0b00000,  0b00000,  0b11111,  0b11111,  0b11111};
+  // Big numbers parts
+  uint8_t FL[8] = { 0b11111,  0b11111,  0b11111,  0b11111,  0b11111,  0b11111,  0b11111,  0b11111 };
+  uint8_t UB[8] = { 0b11111,  0b11111,  0b11111,  0b00000,  0b00000,  0b00000,  0b00000,  0b00000 };
+  uint8_t LB[8] = { 0b00000,  0b00000,  0b00000,  0b00000,  0b00000,  0b11111,  0b11111,  0b11111 };
+  uint8_t BU[8] = { 0b11111,  0b11111,  0b11111,  0b00000,  0b00000,  0b00000,  0b11111,  0b11111 };
+  uint8_t BL[8] = { 0b11111,  0b00000,  0b00000,  0b00000,  0b00000,  0b11111,  0b11111,  0b11111 };
 
-  lcd.createChar(0, LT);
+  lcd.createChar(0, FL);
   lcd.createChar(1, UB);
-  lcd.createChar(2, RT);
-  lcd.createChar(3, LL);
-  lcd.createChar(4, LB);
-  lcd.createChar(5, LR);
-  lcd.createChar(6, UMB);
-  lcd.createChar(7, LMB);
+  lcd.createChar(2, LB);
+  lcd.createChar(3, BU);
+  lcd.createChar(4, BL);
+
+  // Emotions
+  uint8_t good[8]   = { 0b00000, 0b01010, 0b00000, 0b00000, 0b10001, 0b01110, 0b00000, 0b00000 };
+  uint8_t normal[8] = { 0b00000, 0b01010, 0b00000, 0b00000, 0b11111, 0b00000, 0b00000, 0b00000 };
+  uint8_t bad[8]    = { 0b00000, 0b01010, 0b00000, 0b00000, 0b01110, 0b10001, 0b00000, 0b00000 };
+  lcd.createChar(5, good);
+  lcd.createChar(6, normal);
+  lcd.createChar(7, bad);
 }
 
 void loadPlot() {
@@ -97,14 +100,12 @@ void updateScreen() {
   lcd.clear();
 
   if (display_mode == 0) {
-    loadClock();
     drawClock();
     drawData();
     drawSensors();
     return;
   }
 
-  loadPlot();
   switch (display_mode) {
     case 1: drawPlot(0, 3, 15, 4, TMP_MIN, TMP_MAX, TMP_STP, (int*)tmpHour, "t hr"); break;
     case 2: drawPlot(0, 3, 15, 4, TMP_MIN, TMP_MAX, TMP_STP, (int*)tmpDay, "t day"); break;
@@ -133,21 +134,27 @@ void readSensors() {
 
 void drawSensors() {
   // Temperature
-  lcd.setCursor(2, 2);
-  lcd.print(String(current_tmp, 1));
+  lcd.setCursor(1, 2);
+  lcd.print(String(current_tmp, 1) + " ");
   lcd.write(223);
 
   // Humidity
-  lcd.setCursor(12, 2);
-  lcd.print(String(current_hum) + " %");
+  lcd.setCursor(10, 2);
+  lcd.print(" " + String(current_hum) + " %");
 
   // Pressure
-  lcd.setCursor(2, 3);
-  lcd.print(String(current_prs) + " mm");
+  lcd.setCursor(1, 3);
+  lcd.print(" " + String(current_prs) + " mm");
 
   // CO2
-  lcd.setCursor(11, 3);
+  lcd.setCursor(10, 3);
   lcd.print(String(current_co2) + " ppm");
+
+  // CO2 impression
+  lcd.setCursor(18, 3);
+  if (current_co2 < 800) lcd.write(5);
+  else if (current_co2 < 1200) lcd.write(6);
+  else if (current_co2 >= 1200) lcd.write(7);
 }
 
 void updateAvgSensorsData() {

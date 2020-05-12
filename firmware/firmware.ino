@@ -162,6 +162,7 @@ void setup() {
   updateTime();
   Serial.println(F("Real time init - Done"));
 
+  readSensors();  // Force sensors read
   updateScreen(); // Force first draw
   Serial.println(F("All set - Done"));
 }

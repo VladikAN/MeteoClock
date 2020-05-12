@@ -35,9 +35,9 @@ void loadClock() {
   lcd.createChar(4, BL);
 
   // Emotions
-  uint8_t good[8]   = { 0b00000, 0b01010, 0b00000, 0b00000, 0b10001, 0b01110, 0b00000, 0b00000 };
-  uint8_t normal[8] = { 0b00000, 0b01010, 0b00000, 0b00000, 0b11111, 0b00000, 0b00000, 0b00000 };
-  uint8_t bad[8]    = { 0b00000, 0b01010, 0b00000, 0b00000, 0b01110, 0b10001, 0b00000, 0b00000 };
+  uint8_t good[8]   = { 0b00000, 0b01010, 0b01010, 0b00000, 0b10001, 0b01110, 0b00000, 0b00000 };
+  uint8_t normal[8] = { 0b00000, 0b01010, 0b01010, 0b00000, 0b00000, 0b11111, 0b00000, 0b00000 };
+  uint8_t bad[8]    = { 0b00000, 0b01010, 0b01010, 0b00000, 0b01110, 0b10001, 0b00000, 0b00000 };
   lcd.createChar(5, good);
   lcd.createChar(6, normal);
   lcd.createChar(7, bad);
@@ -133,25 +133,26 @@ void readSensors() {
 }
 
 void drawSensors() {
+  // refer to https://learn.robotgeek.com/getting-started/59-lcd-special-characters.html for any chars you want
   // Temperature
-  lcd.setCursor(1, 2);
+  lcd.setCursor(0, 2);
   lcd.print(String(current_tmp, 1) + " ");
   lcd.write(223);
 
   // Humidity
-  lcd.setCursor(10, 2);
-  lcd.print(" " + String(current_hum) + " %");
+  lcd.setCursor(8, 2);
+  lcd.print(String(current_hum) + " %");
 
   // Pressure
-  lcd.setCursor(1, 3);
-  lcd.print(" " + String(current_prs) + " mm");
+  lcd.setCursor(14, 2);
+  lcd.print(String(current_prs) + " mm");
 
   // CO2
-  lcd.setCursor(10, 3);
-  lcd.print(String(current_co2) + " ppm");
+  lcd.setCursor(4, 3);
+  lcd.print("CO2 " + String(current_co2) + " ppm");
 
   // CO2 impression
-  lcd.setCursor(18, 3);
+  lcd.setCursor(17, 3);
   if (current_co2 < 800) lcd.write(5);
   else if (current_co2 < 1200) lcd.write(6);
   else if (current_co2 >= 1200) lcd.write(7);

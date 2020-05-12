@@ -9,6 +9,8 @@ Project description, Q&A, useful links can be found at oficial project page([RU]
 I have made several changes to original code while exploring this solution.
 * Removed rain prediction.
 * Organized code a bit.
+* Changed clock font.
+* Added emotion based on PPM value.
 
 ![version - 1](/pics/v1-min.jpg)
 
